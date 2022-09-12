@@ -30,7 +30,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.compose.lazylist.LazyListActivity
+import com.example.compose.ui.lazylist.BiliLazyListActivity
 import com.example.compose.ui.theme.ComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -55,11 +55,11 @@ class MainActivity : ComponentActivity() {
                             startActivity(
                                 Intent(
                                     this@MainActivity,
-                                    LazyListActivity::class.java
+                                    BiliLazyListActivity::class.java
                                 )
                             )
                         }) {
-                            Text(text = "lazyListDemo")
+                            Text(text = "Bilibili热门视频")
                         }
                     }
                 }

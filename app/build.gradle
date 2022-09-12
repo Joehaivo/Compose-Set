@@ -6,13 +6,22 @@ plugins {
 android {
     compileSdk 32
 
+    signingConfigs {
+        release {
+            storeFile file("../compose-set.jks")
+            storePassword "963852741"
+            keyAlias "key0"
+            keyPassword "963852741"
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.compose"
         minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
+        signingConfig signingConfigs.release
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -20,9 +29,20 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+            zipAlignEnabled true
+            debuggable true
+            shrinkResources false
+            signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            debuggable true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -62,6 +82,27 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
     implementation 'com.blankj:utilcodex:1.31.0'
     implementation 'com.google.code.gson:gson:2.9.1'
-    implementation("io.coil-kt:coil-compose:2.2.1")
+    implementation "io.coil-kt:coil-compose:2.2.1"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+    implementation "com.squareup.okhttp3:okhttp:4.10.0"
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation platform("com.squareup.okhttp3:okhttp-bom:4.10.0")
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+    implementation "androidx.paging:paging-runtime:3.1.1"
+    implementation "androidx.paging:paging-compose:1.0.0-alpha14"
+    implementation "com.google.accompanist:accompanist-swiperefresh:0.18.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
+}
+
+task buildReleaseApk(dependsOn: 'assembleRelease') {
+    def apkFolder = "${buildDir}/outputs/apk/release/"
+    def targetApkFolder = "${rootProject.getProjectDir()}/release/"
+    if (!file(targetApkFolder).exists()) {
+        mkdir "${targetApkFolder}"
+    }
+    copy {
+        from apkFolder
+        into targetApkFolder
+    }
 }

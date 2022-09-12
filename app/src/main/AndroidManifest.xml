@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         >
         <activity
-            android:name="com.example.compose.lazylist.LazyListActivity"
+            android:name="com.example.compose.ui.lazylist.BiliLazyListActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
